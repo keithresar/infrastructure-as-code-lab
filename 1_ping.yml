@@ -1,0 +1,82 @@
+---
+#
+# Learning goals from this file:
+#
+#   1. Be able to read and write a YAML file
+#   2. Understand the major components that define a playbook
+#   3. Execute this playbook to verify your inventory file is correct
+#
+
+
+#
+# This is a simple YAML file.  All Ansible is written using the YAML
+# formatting language.  Follow these rules to succeed with YAML:
+#
+#   1. SPACING IS CRITICAL
+#      Parent/child relationships are established by indenting elements
+#      from one line to the next.  You must be consistent with your spaces
+#      (a two-space indend between elements is standard).  Do not use
+#      tabs (\t) as these look like spaces but will be the  bane of your
+#      existence!
+#
+#   2. KEY-VALUE PAIRS
+#      Define key-value pairs by seperating elements with a ':', e.g.
+#        key: value
+#
+#   3. ORDERED LISTS
+#      Define ordered lists by starting each new element with a '-'
+#
+#   Learn more about Ansible YAML here:
+#   https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+#
+#
+
+
+#
+# Definitions:
+#
+#   PLAYBOOK
+#   This file is an Ansible playbook.  Each playbook can contain one or more plays.
+#
+#   PLAY
+#   Below you will find exactly one play.  Notice how the line "- host: all" begins
+#   with a '-'?  That is defining a list of plays.  Each play can address different
+#   hosts, execute with a different automation scope, and will contain a unique
+#   selection of the automation tasks where your actual work is performed.
+#
+#   Want to learn more?  Click the link below for an example playbook with all the
+#   options enabled and an insane level of commenting detail:
+#   https://gist.github.com/marktheunissen/2979474
+#
+
+# The hosts keyword is an incredibly powerful tool to filter what hosts from the
+# inventory you created will have the subsequent automation applied to them.
+# Special keywords are 'all' for everything in inventory and 'localhost' for the local
+# server where this playbook resides.  This field will often refer groups, regular
+# expressions, network subnets, etc.
+- hosts: all
+  
+  #
+  # Here are indented within the play so every element you create will be a "child" of
+  # this play and affect its behavior.  As we progress through this course you'll notice
+  # this section gets filled will many different elements to tune behavior.  For now
+  # it is largely empty.
+  #
+
+  # Tasks are where the actual work gets done.  You'll notice it is an ordered list of
+  # elements with names (optional), referencing Ansible modules (in this case 'ping'), and
+  # often including parameters to modules themselves (none included here).
+  #
+  # This simple task is executing the 'ping' module.  This isn't like an ICMP network ping,
+  # but rather an Ansible ping.  This module returns success if all the following conditions
+  # are true:
+  #  - Network connectivity exists with the target server
+  #  - ssh connection can be established
+  #  - Ansible can successfully authenticate
+  #  - A valid Python interpretor exists on the target server
+  #  - A sample piece of Python code can be executed on the target server
+  tasks:
+    - name: Verify host connectivity
+      ping:
+  
+
