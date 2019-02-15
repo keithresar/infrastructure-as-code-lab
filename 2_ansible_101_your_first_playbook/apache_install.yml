@@ -13,7 +13,14 @@
 
   # These tasks must be executed as root, so this line uses sudo from our student account
   become: true
+
+  # We can define variables in a whopping 24 locations!  For now let's define a variable
+  # right inline here.  It will be transparently consume as part of task 3.  Wondering how?
+  # Open up the referenced file in the templates/ directory.
+  vars:
+    httpd_port: 80
   
+
   tasks:
 
     # Task 1: Install the Apache (httpd) package
@@ -26,10 +33,10 @@
 
     # Task 2: Configure httpd
     # Help: https://docs.ansible.com/ansible/latest/modules/template_module.html
-   - name: Configure Apache
-     template:
-       src: templates/httpd.conf.j2
-       dest: /etc/httpd/conf.d/httpd.conf
+    - name: Configure Apache
+      template:
+        src: templates/httpd.conf.j2
+        dest: /etc/httpd/conf.d/httpd.conf
 
  
     # Task 3: Start the Apache (httpd) service
