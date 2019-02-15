@@ -1,0 +1,41 @@
+---
+#
+# Learning goals from this file:
+#
+#   1. Write your first Ansible automation
+#   2. Become familiar with the standard Ansible module documentation
+#
+
+
+# Notice how the hosts keyword is now being used to limit the "blast radius" of
+# our automation.
+- hosts: web
+
+  # These tasks must be executed as root, so this line uses sudo from our student account
+  become: true
+  
+  tasks:
+
+    # Task 1: Install the Apache (httpd) package
+    # Help: https://docs.ansible.com/ansible/latest/modules/yum_module.html
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+
+    # Task 2: Configure httpd
+    # Help: https://docs.ansible.com/ansible/latest/modules/template_module.html
+   - name: Configure Apache
+     template:
+       src: templates/httpd.conf.j2
+       dest: /etc/httpd/conf.d/httpd.conf
+
+ 
+    # Task 3: Start the Apache (httpd) service
+    # Help: https://docs.ansible.com/ansible/latest/modules/service_module.html
+    - name: Start httpd
+      service:
+        name: httpd
+        state: started
+ 
