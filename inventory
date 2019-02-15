@@ -1,0 +1,39 @@
+;
+; Define a group with '[' and ']',
+; and define group members by placing
+; them under the square brackets.
+;
+[web]
+; Enter IP address for your web server
+100.24.69.158
+
+
+[api]
+; Enter IP address for your api server
+
+
+;
+; Groups can be nested like this
+;
+[servers:children]
+web
+api
+
+
+;
+; Variables can be encoded in your inventory
+; as the group or host level.  Below is a
+; group level example
+;
+[servers:vars]
+ansible_ssh_user=student0
+
+
+[loadblancer]
+; Enter IP address for your api server
+
+
+
+[firewall]
+; Enter IP address for your api server
+
