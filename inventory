@@ -5,7 +5,7 @@
 ;
 [web]
 ; Enter IP address for your web server
-100.24.69.158
+127.0.0.1
 
 
 [api]
