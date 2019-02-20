@@ -5,7 +5,7 @@
 ;
 [web]
 ; Enter IP address for your web server
-127.0.0.1
+100.26.250.204
 
 
 [api]
@@ -43,6 +43,5 @@ ansible_ssh_user=student0
 student_number=0
 student_user=student0
 student_password=R3dh@t12
-ansible_python_interpreter=/Users/keithresar/ansible/ansible-27/bin/python
 
 

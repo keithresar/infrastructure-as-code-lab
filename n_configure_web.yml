@@ -1,0 +1,31 @@
+---
+
+- hosts: web
+  become: true
+  
+  tasks:
+    - name: Install packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - httpd
+        - php
+        - git
+
+
+    #- name: copy template
+    #- nname: checkout app
+
+    - name: Start httpd
+      service:
+        name: httpd
+        state: started
+ 
+    - name: Checkout app source
+      git:
+        repo: https://github.com/keithresar/infrastructure-as-code-web.git
+        dest: /var/www/html
+        update: no
+        force: yes
+
