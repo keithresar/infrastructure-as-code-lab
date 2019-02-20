@@ -1,0 +1,7 @@
+che.server.ip="100.26.150.111"
+
+
+workspace.runtime.docker.image="quay.io/keithresar/centos-ansible-che"
+
+workspace.name="ansible"
+workspace.ram=512
