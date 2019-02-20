@@ -29,11 +29,20 @@ api
 ansible_ssh_user=student0
 
 
-[loadblancer]
+[loadbalancer]
 ; Enter IP address for your api server
+100.24.74.55
 
 
 
 [firewall]
 ; Enter IP address for your api server
+
+
+[all:vars]
+student_number=0
+student_user=student0
+student_password=R3dh@t12
+ansible_python_interpreter=/Users/keithresar/ansible/ansible-27/bin/python
+
 
