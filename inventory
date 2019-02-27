@@ -5,12 +5,11 @@
 ;
 [web]
 ; Enter IP address for your web server
-100.26.250.204
-
+10.10.10.226
 
 [api]
 ; Enter IP address for your api server
-
+10.10.11.220
 
 ;
 ; Groups can be nested like this
@@ -30,18 +29,12 @@ ansible_ssh_user=student0
 
 
 [loadbalancer]
-; Enter IP address for your api server
-100.24.74.55
+; Enter IP address for your f5 server
 
-
-
-[firewall]
-; Enter IP address for your api server
 
 
 [all:vars]
 student_number=0
 student_user=student0
 student_password=R3dh@t12
-
 
