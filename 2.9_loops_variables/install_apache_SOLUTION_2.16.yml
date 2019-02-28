@@ -16,30 +16,55 @@
   # right inline here.  It will be transparently consumed as part of a subsequent task.  Wondering how?
   # Open up the referenced file in the templates/ directory.
   vars:
+    httpd_test_message: Hello, this is my test message
+    httpd_port: 81
+    httpd_packages:
+      - httpd
+      - mod_wsgi
 
   tasks:
 
     # Task 2.10: Install packages using a loop
     # Help: https://docs.ansible.com/ansible/latest/modules/yum_module.html
     # Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html
+    - name: Install packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ httpd_packages }}"
 
 
     # Task 2.11: Configure Apache
     # Help: https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+    - name: Configure Apache
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "^Listen "
+        line: "Listen {{ httpd_port }}"
+      notify: restart httpd
 
  
     # Task 2.12: Start the Apache (httpd) service
     # Help: https://docs.ansible.com/ansible/latest/modules/service_module.html
+    - name: Start httpd
+      service:
+        name: httpd
+        state: started
 
  
     # Task 2.13: Make your web page
     # Help: https://docs.ansible.com/ansible/latest/modules/template_module.html
-
+    - name: Create web page
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
 
 
   # Task 2.16: Changing Apache configuration for real
   # Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#handlers-running-operations-on-change
   handlers:
-
-
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
 
