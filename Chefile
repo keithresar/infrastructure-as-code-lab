@@ -1,4 +1,4 @@
-che.server.ip="34.226.221.73"
+che.server.ip="52.203.201.221"
 
 
 workspace.runtime.docker.image="quay.io/keithresar/centos-ansible-che"

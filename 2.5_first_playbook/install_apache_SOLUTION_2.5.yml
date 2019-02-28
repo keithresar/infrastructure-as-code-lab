@@ -1,0 +1,18 @@
+---
+#
+# Learning goals from this file:
+#
+#   1. Write your first Ansible automation
+#   2. Become familiar with the standard Ansible module documentation
+#
+
+
+# Task 2.5 - Defining your Play
+# Notice how the hosts keyword is now being used to limit the "blast radius" of
+# our automation.
+- hosts: web
+  name: Install the Apache web service
+
+  # These tasks must be executed as root, so this line uses sudo from our student account
+  become: true
+

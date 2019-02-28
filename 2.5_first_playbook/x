@@ -7,15 +7,17 @@
 #
 
 
+# Task 2.5 - Defining your Play
 # Notice how the hosts keyword is now being used to limit the "blast radius" of
 # our automation.
 - hosts: web
+  name: Install the Apache web service
 
   # These tasks must be executed as root, so this line uses sudo from our student account
   become: true
 
   # We can define variables in a whopping 24 locations!  For now let's define a variable
-  # right inline here.  It will be transparently consume as part of task 3.  Wondering how?
+  # right inline here.  It will be transparently consumed as part of a subsequent task.  Wondering how?
   # Open up the referenced file in the templates/ directory.
   vars:
     httpd_port: 80
