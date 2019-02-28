@@ -2,20 +2,16 @@
 #
 # Learning goals from this file:
 #
-#   1. Write your first Ansible automation
-#   2. Become familiar with the standard Ansible module documentation
+#   1. Introduce variables
+#   2. Implement looping
 #
 
 
-# Task 2.5 - Defining your Play
-# Notice how the hosts keyword is now being used to limit the "blast radius" of
-# our automation.
 - hosts: web
   name: Install the Apache web service
-
-  # These tasks must be executed as root, so this line uses sudo from our student account
   become: true
 
+  # Task 2.9: Define variables
   # We can define variables in a whopping 24 locations!  For now let's define a variable
   # right inline here.  It will be transparently consumed as part of a subsequent task.  Wondering how?
   # Open up the referenced file in the templates/ directory.
@@ -25,12 +21,9 @@
 
   tasks:
 
-    # Task 1: Install the Apache (httpd) package
+    # Task 2.9: Install packages using a loop
     # Help: https://docs.ansible.com/ansible/latest/modules/yum_module.html
-    - name: Install httpd
-      yum:
-        name: httpd
-        state: present
+    # Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html
 
 
     # Task 2: Configure httpd
