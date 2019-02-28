@@ -1,0 +1,33 @@
+---
+#
+# Learning goals from this file:
+#
+#   1. Modify your `install_apache.yml` on your own to remove the apache
+#      from your web server
+#
+
+
+# Notice how the hosts keyword is now being used to limit the "blast radius" of
+# our automation.
+- hosts: web
+  name: Install the Apache web service
+
+  # These tasks must be executed as root, so this line uses sudo from our student account
+  become: true
+
+  tasks:
+
+    # Help: https://docs.ansible.com/ansible/latest/modules/service_module.html
+    - name: Stop httpd
+      service:
+        name: httpd
+        state: stopped
+
+    # Help: https://docs.ansible.com/ansible/latest/modules/yum_module.html
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: absent
+
+
+ 
