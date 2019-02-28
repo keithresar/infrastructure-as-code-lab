@@ -53,8 +53,4 @@
  
     # Task 2.13: Make your web page
     # Help: https://docs.ansible.com/ansible/latest/modules/template_module.html
-    - name: Create web page
-      template:
-        src: index.html.j2
-        dest: /var/www/html/index.html
 
