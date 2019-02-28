@@ -1,0 +1,16 @@
+---
+#
+# Learning goals from this file:
+#
+#   1. Decompose the single-file playbook into a reusable role
+#
+
+
+- hosts: web
+  name: Install the Apache web service
+  become: true
+
+  # Task 2.18: Decomposing tasks into roles
+  # Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
+  # Also reference files under `apache_simple/*/main.yml`
+

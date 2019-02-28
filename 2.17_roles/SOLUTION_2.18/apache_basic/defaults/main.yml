@@ -1,0 +1,4 @@
+---
+# defaults file for apache_basic
+httpd_test_message: Hello, this is my test message
+httpd_port: 81

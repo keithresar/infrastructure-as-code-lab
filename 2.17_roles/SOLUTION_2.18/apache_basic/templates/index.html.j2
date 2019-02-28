@@ -1,0 +1,6 @@
+<p>
+{{ httpd_test_message | default('This is a really bad web page') }}
+
+<p>
+Page is hosted on {{ ansible_host }} and should be listening on port {{ httpd_port }}.
+
