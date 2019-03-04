@@ -1,0 +1,18 @@
+---
+
+#
+# Approach 1 - use the `nmcli` module to directly interact with the network manager
+# tool.  This is a less portable method and doesn't teach what I wanted to highlight.
+#
+
+#
+# Approach 2 - use the lineinfile module.
+#
+
+- name: Point servers to Google DNS
+  lineinfile:
+    path: /etc/resolv.conf
+    regexp: '^nameserver'
+    line: 'nameserver 8.8.8.8'
+
+
