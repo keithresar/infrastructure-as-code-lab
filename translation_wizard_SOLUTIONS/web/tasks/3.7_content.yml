@@ -11,4 +11,5 @@
      repo: https://github.com/keithresar/infrastructure-as-code-web
      dest: /var/www/html
      update: no
+     force: yes
 

@@ -1,9 +1,0 @@
----
-
-- name: Install required rpms
-  yum:
-    state: present
-    name: 
-      - git
-      - docker
-

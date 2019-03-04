@@ -1,2 +1,6 @@
 ---
 # tasks file for api
+
+- include_tasks: 3.10_build_image.yml
+- include_tasks: 3.11_deploy_one_image.yml
+

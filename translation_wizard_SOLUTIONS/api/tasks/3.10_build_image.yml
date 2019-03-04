@@ -1,0 +1,20 @@
+---
+
+- name: Checkout build repo locally
+  git:
+    repo: https://github.com/keithresar/infrastructure-as-code-language-api
+    dest: /tmp/infrastructure-as-code-language-api
+  delegate_to: localhost
+
+
+- name: Build container image
+  docker_image:
+    name: "api-{{ student_user }}:latest"
+    repository: "100.24.70.109:5000/api-{{ student_user }}:latest"
+    push: yes
+    path: /tmp/infrastructure-as-code-language-api/
+    force: yes
+  delegate_to: localhost
+
+
+
