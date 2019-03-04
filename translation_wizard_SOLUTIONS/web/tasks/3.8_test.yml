@@ -1,2 +1,13 @@
 ---
 
+#
+# Approach 1 - using the URI module verify the site is accessible remotely
+#
+
+- name: Verify site available
+  uri:
+    url: "http://{{ ansible_ssh_host }}"
+    status_code: 200
+  delegate_to: localhost
+  become: False
+

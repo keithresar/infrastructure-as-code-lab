@@ -1,2 +1,8 @@
 ---
 # handlers file for common_server
+
+- name: start firewalld
+  service:
+    state: started
+    name: firewalld
+

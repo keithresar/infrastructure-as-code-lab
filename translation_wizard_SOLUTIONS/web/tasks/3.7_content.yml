@@ -1,2 +1,14 @@
 ---
 
+#
+# Approach 1 - perform a git clone of the web content from the referenced repo.  Consider
+# what you want to do with the private `.git` directory and how to manage locally made changes
+# and remote changes made to the git repo.
+#
+
+-  name: Promote web content
+   git:
+     repo: https://github.com/keithresar/infrastructure-as-code-web
+     dest: /var/www/html
+     update: no
+
