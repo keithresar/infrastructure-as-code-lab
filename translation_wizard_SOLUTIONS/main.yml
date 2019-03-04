@@ -1,0 +1,10 @@
+---
+
+- hosts: servers
+  name: Common Server Configuration
+  become: true
+
+  roles: 
+    # Task 3.1: Add common server role to your playbook
+    - common_server
+

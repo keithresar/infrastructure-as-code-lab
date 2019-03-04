@@ -1,0 +1,5 @@
+---
+# tasks file for common_server
+
+- include_tasks: 3.1_hostname.yml
+

@@ -1,0 +1,32 @@
+---
+
+#
+# Approach 1 - no redundancy in the inventory file. We assume the first group we find
+# that isn't in the parent group `servers` is our role.
+#
+- set_fact:
+    group_role: "{{ item }}"
+  loop: "{{ group_names }}"
+  when: item not in ('servers')
+
+#
+# Approach 2 - be more explicit in this file.  This is less flexible
+#
+#- set_fact:
+#    group_role: api
+#  when: 'api' in group_names
+#- set_fact:
+#    group_role: web
+#  when: 'web' in group_names
+
+#
+# Approach 3 - create a variable in your inventory with the name `group_role`
+#
+
+
+
+- name: Set hostname on each server
+  hostname:
+    name: "{{ group_role }}-{{ student_user }}"
+
+
