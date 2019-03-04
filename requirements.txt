@@ -1,1 +1,8 @@
-f5_sdk
+boto
+boto3
+botocore
+f5-sdk
+pyapi-gitlab
+netaddr
+hvac
+ansible-tower-cli
