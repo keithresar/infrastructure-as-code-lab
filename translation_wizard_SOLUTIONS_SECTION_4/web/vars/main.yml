@@ -1,0 +1,6 @@
+---
+# vars file for web
+
+api_endpoint_ip: "{{ groups['api'][0] }}"
+api_endpoint_port: 8080
+

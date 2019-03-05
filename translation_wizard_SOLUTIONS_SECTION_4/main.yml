@@ -1,0 +1,37 @@
+---
+
+- hosts: localhost
+  gather_facts: False
+  become: False
+
+  tasks:
+    - name: Store AWS Keys
+      set_fact:
+        aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.163:8200') }}"
+
+- hosts: servers
+  name: Common Server Configuration
+  become: True
+  gather_facts: False
+
+  roles: 
+    # Task 3.1: Add common server role to your playbook
+    - common_server
+
+
+- hosts: web
+  name: Web Server Configuration
+  become: true
+
+  roles: 
+    # Task 3.5: Add web role to your playbook
+    - web
+
+- hosts: api
+  name: API Configuration
+  become: true
+
+  roles: 
+    # Task 3.9: Add api role to your playbook
+    - api
+

@@ -1,0 +1,9 @@
+---
+# tasks file for common_server
+
+- include_tasks: 3.2_hostname.yml
+- include_tasks: 3.3_dns.yml
+- include_tasks: 3.4_motd.yml
+
+- include_tasks: 3.6_packages.yml
+

@@ -1,0 +1,10 @@
+---
+
+- name: Install firewalld packages
+  yum:
+    state: present
+    name:
+      - firewalld
+      - python-firewall
+  notify: start firewalld
+

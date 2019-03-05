@@ -1,0 +1,7 @@
+---
+# tasks file for aws_sg
+
+- debug:
+    msg: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token=R3dh@t12 url=http://10.10.12.163:8200') }}"
+
+

@@ -1,0 +1,11 @@
+---
+
+- hosts: web
+  name: Web Server Configuration
+  become: true
+  gather_facts: False
+
+  roles: 
+    # Task 3.5: Add web role to your playbook
+    - aws_sg
+

@@ -1,0 +1,6 @@
+---
+# defaults file for web
+web_packages:
+  - git
+  - httpd
+  - php
