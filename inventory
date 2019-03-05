@@ -5,11 +5,11 @@
 ;
 [web]
 ; Enter IP address for your web server
-10.10.10.92
+10.10.10.173
 
 [api]
 ; Enter IP address for your api server
-10.10.11.217
+10.10.11.66
 
 ;
 ; Groups can be nested like this
@@ -37,4 +37,5 @@ ansible_ssh_user=student0
 student_number=0
 student_user=student0
 student_password=R3dh@t12
+aws_region=us-east-1
 
