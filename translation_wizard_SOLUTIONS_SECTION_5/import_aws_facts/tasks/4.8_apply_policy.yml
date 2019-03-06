@@ -1,0 +1,51 @@
+---
+
+- fail:
+  when: acl_policy_ports is not defined
+
+- set_fact:
+    aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.117:8200') }}"
+
+
+- name: Extract data from the ec2.py script
+  command:
+    cmd: ../ec2.py
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ aws_keys.data.aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_keys.data.aws_secret_key }}"
+  delegate_to: localhost
+  become: False
+  register: ec2_raw
+
+- set_fact:
+    ec2: "{{ ec2_raw.stdout | from_json }}"
+
+- set_fact:
+    my_ec2_facts: "{{ item.value }}"
+  when: item.value.ec2_private_ip_address == ansible_ssh_host
+  loop: "{{ ec2._meta.hostvars | dict2items }}"
+
+- name: "Get current facts for {{ my_ec2_facts.ec2_security_group_ids }}"
+  ec2_group_facts:
+    aws_access_key: "{{ aws_keys.data.aws_access_key }}"
+    aws_secret_key: "{{ aws_keys.data.aws_secret_key }}"
+    region: "{{ aws_region }}"
+    filters:
+      group-id: "{{ my_ec2_facts.ec2_security_group_ids }}"
+  register: sg
+  delegate_to: localhost
+  become: False
+
+- name: "Apply policy to {{ sg.security_groups[0].group_name }} ({{ my_ec2_facts.ec2_security_group_ids }})"
+  ec2_group:
+    aws_access_key: "{{ aws_keys.data.aws_access_key }}"
+    aws_secret_key: "{{ aws_keys.data.aws_secret_key }}"
+    region: "{{ aws_region }}"
+    name: "{{ sg.security_groups[0].group_name }}"
+    description: "{{ sg.security_groups[0].description }}"
+    vpc_id: "{{ my_ec2_facts.ec2_vpc_id }}"
+    group_id: "{{ my_ec2_facts.ec2_security_group_ids }}"
+    rules: "{{ acl_policy_ports }}"
+  delegate_to: localhost
+  become: False
+

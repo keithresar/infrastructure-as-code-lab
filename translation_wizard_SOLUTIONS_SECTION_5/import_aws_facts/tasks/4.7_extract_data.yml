@@ -1,0 +1,26 @@
+---
+
+- set_fact:
+    aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.117:8200') }}"
+
+
+- name: Extract data from the ec2.py script
+  command:
+    cmd: ../ec2.py
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ aws_keys.data.aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_keys.data.aws_secret_key }}"
+  delegate_to: localhost
+  become: False
+  register: ec2_raw
+
+- set_fact:
+    ec2: "{{ ec2_raw.stdout | from_json }}"
+
+
+# Task 4.7 Approach 1: 
+- set_fact:
+    my_ec2_facts: "{{ item.value.ec2_private_ip_address }}"
+  when: item.value.ec2_private_ip_address == ansible_ssh_host
+  loop: "{{ ec2._meta.hostvars | dict2items }}"
+

@@ -1,0 +1,23 @@
+---
+
+#
+# Approach 1 - hardcode these variables
+#
+
+#
+# Approach 2 - define these in another set of variables that can be overidden as needed
+#
+
+- name: Connect web server to API endpoint
+  lineinfile:
+    path: /var/www/html/configure.php
+    regexp: API_SERVER_IP
+    line: "define('API_SERVER_IP','{{ api_endpoint_ip }}');"
+
+- name: Connect web server to API endpoint
+  lineinfile:
+   path: /var/www/html/configure.php
+   regexp: API_SERVER_PORT
+   line: "define('API_SERVER_PORT','{{ api_endpoint_port }}');"
+    
+

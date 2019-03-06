@@ -1,0 +1,55 @@
+---
+
+- hosts: web
+  gather_facts: False
+  become: False
+
+  roles:
+    - role: import_aws_facts
+      acl_policy_ports:
+        - proto: tcp
+          ports:
+            - 22
+            - 80
+          cidr_ip: 0.0.0.0/0
+
+- hosts: api
+  gather_facts: False
+  become: False
+
+  roles:
+    - role: import_aws_facts
+      acl_policy_ports:
+        - proto: tcp
+          ports:
+            - 22
+            - 8080
+          cidr_ip: 0.0.0.0/0
+
+
+- hosts: servers
+  name: Common Server Configuration
+  become: True
+  gather_facts: False
+
+  roles: 
+    # Task 3.1: Add common server role to your playbook
+    - common_server
+
+
+- hosts: web
+  name: Web Server Configuration
+  become: true
+
+  roles: 
+    # Task 3.5: Add web role to your playbook
+    - web
+
+- hosts: api
+  name: API Configuration
+  become: true
+
+  roles: 
+    # Task 3.9: Add api role to your playbook
+    - api
+

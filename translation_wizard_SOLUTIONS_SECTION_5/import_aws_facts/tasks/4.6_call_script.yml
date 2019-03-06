@@ -1,0 +1,41 @@
+---
+
+# Task 4.4 - Use the hashi_vault lookup plugin to read out aws keys
+- set_fact:
+    aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.117:8200') }}"
+
+
+#
+# Task 4.6 Approach 1 - Use a pipe lookup plugin and pass along the appropriate variables to execute the 
+# ec2.py script
+# Help: https://docs.ansible.com/ansible/latest/plugins/lookup/pipe.html
+#
+#- set_fact:
+#    ec2: "{{ lookup('pipe','AWS_ACCESS_KEY_ID='+aws_keys.data.aws_access_key+' AWS_SECRET_ACCESS_KEY='+aws_keys.data.aws_secret_key+' ../ec2.py') }}"
+#
+#- debug:
+#    msg: "{{ ec2._meta.hostvars['54.152.66.148'].ec2_security_group_ids }}"
+
+
+#
+# Task 4.6 Approach 2 - Use the ansible command module to execute the ec2.py script
+# Help: https://docs.ansible.com/ansible/latest/modules/command_module.html
+#
+
+- name: Extract data from the ec2.py script
+  command:
+    cmd: ../ec2.py
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ aws_keys.data.aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_keys.data.aws_secret_key }}"
+  delegate_to: localhost
+  become: False
+  register: ec2_raw
+
+- set_fact:
+    ec2: "{{ ec2_raw.stdout | from_json }}"
+
+#- debug:
+#    msg: "{{ ec2._meta.hostvars['54.152.66.148'].ec2_security_group_ids }}"
+
+

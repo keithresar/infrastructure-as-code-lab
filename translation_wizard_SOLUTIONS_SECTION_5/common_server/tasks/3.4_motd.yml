@@ -1,0 +1,23 @@
+---
+
+#
+# Approach 1 - Copy the file into the `files/` directory of your role and then use the
+# copy module to make sure it exists on your target server.  The downside with this
+# approach is that you need to update this whenever infosec updates the banner text.
+#
+
+
+#
+# Approach 2 - Use the URI module to download and store the most recent banner
+#
+- name: Get MOTD warning banner
+  uri:
+    url:  https://raw.githubusercontent.com/keithresar/infrastructure-as-code-control-lessons/master/warning_banner.html
+    return_content: yes
+  register: motd
+
+- name: Set MOTD warning banner
+  copy:
+    content: "{{ motd.content }}"
+    dest: /etc/motd
+
