@@ -15,3 +15,8 @@
       ticket_subject: update
       ticket_comment: lorem ipsum
 
+    - role: ticketsnow
+      state: closed
+      ticket_subject: closed
+      ticket_comment: lorem ipsum
+

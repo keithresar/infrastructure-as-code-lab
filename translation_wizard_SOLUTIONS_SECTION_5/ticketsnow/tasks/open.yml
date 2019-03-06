@@ -7,7 +7,7 @@
 - name: "Updating ticket #{{ tickets_id }}"
   uri:
     url: "http://localhost/ticketnow/{{ tickets_id }}"
-    method: POST
+    method: PUT
     user: "{{ student_user }}"
     password: "{{ student_password }}"
     force_basic_auth: yes
@@ -16,6 +16,4 @@
       subject: "{{ ticket_subject }}"
       comment: "{{ ticket_comment }}"
       status: "{{ state | title }}"
-    return_content: yes
-  register: response
 
