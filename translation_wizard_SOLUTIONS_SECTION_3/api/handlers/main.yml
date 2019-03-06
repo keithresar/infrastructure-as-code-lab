@@ -1,2 +1,8 @@
 ---
 # handlers file for api
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+

@@ -6,16 +6,25 @@
       - docker
       - python-docker
     state: present 
+  register: yum
+
+- name: Enable insecure registries
+  lineinfile:
+    path: /etc/sysconfig/docker
+    regex: ^INSECURE_REGISTRY
+    line: "INSECURE_REGISTRY='--insecure-registry {{ container_registry_private_ip }}:5000'"
+  register: docker
 
 - name: Docker daemon running
   service:
     name: docker
-    state: started
+    state: restarted
+  when: docker.changed or yum.changed
 
 - name: Deploy container image
   docker_container:
     name: api1
-    image: "100.24.70.109:5000/api-{{ student_user }}"
+    image: "{{ container_registry_private_ip }}:5000/api-{{ student_user }}"
     ports:
       - 8080:8080
     env:

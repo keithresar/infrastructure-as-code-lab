@@ -22,6 +22,9 @@
   name: API Configuration
   become: true
 
+  vars:
+    container_registry_private_ip: 10.10.12.117
+
   roles: 
     # Task 3.9: Add api role to your playbook
     - api

@@ -5,11 +5,12 @@
 ;
 [web]
 ; Enter IP address for your web server
-10.10.10.173
+10.10.10.77
+
 
 [api]
 ; Enter IP address for your api server
-10.10.11.66
+10.10.11.144
 
 ;
 ; Groups can be nested like this

@@ -32,4 +32,11 @@
     state: enabled
     permanent: yes
     immediate: yes
+    
+    
+- name: Make sure Apache is running
+  service:
+    state: started
+    name: httpd
+    
 
