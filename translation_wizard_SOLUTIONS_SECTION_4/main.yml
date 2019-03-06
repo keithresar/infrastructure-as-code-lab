@@ -1,14 +1,25 @@
 ---
 
-- hosts: localhost
+#- hosts: localhost
+#  gather_facts: False
+#  become: False
+#
+#  tasks:
+#    # Task 4.4: Get AWS access keys from vault
+#    - name: Store AWS Keys
+#      set_fact:
+#        aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.163:8200') }}"
+#
+#  roles:
+#    - role: import_aws_facts
+
+- hosts: web
   gather_facts: False
   become: False
 
-  tasks:
-    # Task 4.4: Get AWS access keys from vault
-    - name: Store AWS Keys
-      set_fact:
-        aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.163:8200') }}"
+  roles:
+    - role: import_aws_facts
+      acl_policy_ports:
 
 
 - hosts: servers
