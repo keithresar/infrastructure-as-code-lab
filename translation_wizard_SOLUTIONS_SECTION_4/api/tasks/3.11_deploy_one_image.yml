@@ -15,7 +15,7 @@
 - name: Deploy container image
   docker_container:
     name: api1
-    image: "100.24.70.109:5000/api-{{ student_user }}"
+    image: "10.10.12.117:5000/api-{{ student_user }}"
     ports:
       - 8080:8080
     env:

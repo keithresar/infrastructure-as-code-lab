@@ -12,7 +12,7 @@
 #
 - name: Get MOTD warning banner
   uri:
-    url:  "http://10.10.12.246/warning_banner.html"
+    url:  https://raw.githubusercontent.com/keithresar/infrastructure-as-code-control-lessons/master/warning_banner.html
     return_content: yes
   register: motd
 

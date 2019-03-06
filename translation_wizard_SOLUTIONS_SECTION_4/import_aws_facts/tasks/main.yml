@@ -1,6 +1,6 @@
 ---
 
-#- import_task: 4.6_call_script.yml
-#- import_task: 4.7_extract_data.yml
-- import_task: 4.8_apply_policy.yml
+#- import_tasks: 4.6_call_script.yml
+#- import_tasks: 4.7_extract_data.yml
+- import_tasks: 4.8_apply_policy.yml
 
