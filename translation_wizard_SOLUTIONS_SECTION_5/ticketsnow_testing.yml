@@ -5,5 +5,8 @@
   become: False
 
   roles:
-    - ticketsnow
+    - role: ticketsnow
+      state: new
+      ticket_subject: test1
+      ticket_comment: test2
 

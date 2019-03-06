@@ -1,0 +1,23 @@
+---
+
+- fail:
+    msg: Missing required parameter to update a ticket
+  when: ticket_subject is not defined or ticket_comment is not defined
+
+- name: "Updating ticket #{{ tickets_id }}"
+  uri:
+    url: http://localhost/ticketnow
+    method: POST
+    user: "{{ student_user }}"
+    password: "{{ student_password }}"
+    force_basic_auth: yes
+    body_format: json
+    body:
+      subject: "{{ ticket_subject }}"
+      body: "{{ ticket_comment }}"
+    return_content: yes
+  register: response
+
+- set_fact:
+    tickets_id: "{{ response.json.tickets_id }}"
+ 

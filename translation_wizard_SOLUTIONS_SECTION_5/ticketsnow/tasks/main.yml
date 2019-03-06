@@ -1,2 +1,8 @@
 ---
-# tasks file for ticketsnow
+
+- fail:
+    msg: Missing required parameter state
+  when: state is not defined
+
+- include_tasks: "{{ state }}.yml"
+ 
