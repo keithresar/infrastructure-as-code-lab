@@ -10,3 +10,8 @@
       ticket_subject: test1
       ticket_comment: test2
 
+    - role: ticketsnow
+      state: open
+      ticket_subject: update
+      ticket_comment: lorem ipsum
+
