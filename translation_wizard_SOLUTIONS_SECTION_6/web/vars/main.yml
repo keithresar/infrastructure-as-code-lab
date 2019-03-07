@@ -1,0 +1,6 @@
+---
+# vars file for web
+
+api_endpoint_ip: "{{ groups['loadbalancer'][0] }}"
+api_endpoint_port: "80{{ '%02d'|format(student_number|int) }}"
+

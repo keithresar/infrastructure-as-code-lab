@@ -1,0 +1,35 @@
+---
+
+#
+# Approach 1: Hardcode specific packages with the yum module
+#
+
+#- name: Install packages
+#  yum:
+#    state: present
+#    name:
+#      - httpd
+#      - php
+
+
+#
+# Approach 2: Reference a package list in a variable that is set in defaults but that
+# can be overidden if the web server was running another interpreter like node.
+#
+
+- name: Install packages
+  yum:
+    state: present
+    name:  "{{ web_packages }}"
+  notify: restart httpd
+
+
+# You'll need to install the firewalld and python-firewalld modules for this to work.
+# Do you think this will be used on only the web server or will it be needed elsewhere?
+- name: Enable http 80/tcp traffic
+  firewalld:
+    port: 80/tcp
+    state: enabled
+    permanent: yes
+    immediate: yes
+

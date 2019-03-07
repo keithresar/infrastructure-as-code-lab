@@ -1,0 +1,22 @@
+---
+
+- hosts: localhost
+  gather_facts: False
+  become: False
+
+  roles:
+    - role: ticketsnow
+      state: new
+      ticket_subject: test1
+      ticket_comment: test2
+
+    - role: ticketsnow
+      state: open
+      ticket_subject: update
+      ticket_comment: lorem ipsum
+
+    - role: ticketsnow
+      state: closed
+      ticket_subject: closed
+      ticket_comment: lorem ipsum
+

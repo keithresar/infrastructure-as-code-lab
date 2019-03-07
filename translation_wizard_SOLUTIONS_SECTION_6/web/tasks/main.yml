@@ -1,0 +1,10 @@
+---
+# tasks file for common_server
+
+- include_tasks: 3.6_packages.yml
+- include_tasks: 3.7_content.yml
+- include_tasks: 3.8_test.yml
+
+- include_tasks: 3.12_api_variables.yml
+
+
