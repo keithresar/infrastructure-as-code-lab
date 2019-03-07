@@ -1,0 +1,61 @@
+---
+
+- name: Create api node
+  bigip_node:
+    provider:
+      server: "{{ ansible_ssh_host }}"
+      server_port: 8443
+      validate_certs: no
+      user: "{{ student_user }}"
+      password: "{{ student_password }}"
+    host: "{{ ansible_ssh_host }}"
+    name: f5
+
+- name: Create api pool
+  bigip_pool:
+    provider:
+      server: "{{ ansible_ssh_host }}"
+      server_port: 8443
+      validate_certs: no
+      user: "{{ student_user }}"
+      password: "{{ student_password }}"
+    name: "{{ student_user }}-pool"
+    lb_method: round-robin
+    monitors: /Common/http
+    monitor_type: and_list
+
+- name: Add pool members
+  bigip_pool_member:
+    provider:
+      server: "{{ ansible_ssh_host }}"
+      server_port: 8443
+      validate_certs: no
+      user: "{{ student_user }}"
+      password: "{{ student_password }}"
+    state: present
+    host: "{{ ansible_ssh_host }}"
+    port: "{{ item }}"
+    description: "{{ student_user }}-api-{{ item }}"
+    pool: "{{ student_user }}-pool"
+  loop:
+    - 8080
+    - 8081
+    - 8082
+
+- name: Create VIP for pool
+  bigip_virtual_server:
+    provider:
+      server: "{{ ansible_ssh_host }}"
+      server_port: 8443
+      validate_certs: no
+      user: "{{ student_user }}"
+      password: "{{ student_password }}"
+    name: f5
+    destination: "{{ ansible_ssh_host }}"
+    port: "80{{ '%02d'|format(student_number|int) }}"
+    enabled_vlans: "all"
+    all_profiles: ['http','oneconnect']
+    pool: "{{ student_user }}-pool"
+    snat: "Automap"
+
+
