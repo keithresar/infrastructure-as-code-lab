@@ -21,3 +21,6 @@
     env:
       LANGUAGELAYER_API_KEY: "{{ lookup('file','/tmp/languagelayer_api_key') }}"
 
+- import_role:
+    name: f5
+
