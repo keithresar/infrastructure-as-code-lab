@@ -24,13 +24,10 @@
       password: "{{ student_password }}"
     state: present
     host: "{{ inventory_hostname }}"
-    port: "{{ item }}"
+    port: "808{{ item }}"
     description: "{{ student_user }}-api-{{ item }}"
     pool: "{{ student_user }}-pool"
-  loop:
-    - 8080
-    - 8081
-    - 8082
+  loop: "{{ range(0, api_container_count, 1)|list }}"
   delegate_to: localhost
 
 - name: Create VIP for pool
