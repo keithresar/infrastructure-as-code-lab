@@ -20,6 +20,7 @@
       - "808{{ item}}: 8080"
     env:
       LANGUAGELAYER_API_KEY: "{{ lookup('file','/tmp/languagelayer_api_key') }}"
+      ELASTICACHE: api-es.rdx8zv.0001.use1.cache.amazonaws.com
   loop: "{{ range(0, api_container_count, 1)|list }}"
 
 - import_role:

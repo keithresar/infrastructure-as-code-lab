@@ -22,8 +22,10 @@
 
 - set_fact:
     my_ec2_facts: "{{ item.value }}"
-  when: item.value.ec2_private_ip_address == ansible_ssh_host
+  when: item.value.ec2_private_ip_address is defined and item.value.ec2_private_ip_address == ansible_ssh_host
   loop: "{{ ec2._meta.hostvars | dict2items }}"
+- debug:
+    var: my_ec2_facts
 
 - name: "Get current facts for {{ my_ec2_facts.ec2_security_group_ids }}"
   ec2_group_facts:
