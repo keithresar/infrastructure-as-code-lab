@@ -1,5 +1,11 @@
 ---
 
+######################################################
+########
+##  First -- we need to get the server role.  There are two approaches
+##  available to do this - choose either of the two and save our server
+##  role the new variable we arbitrarily named `group_role`.
+
 #
 # Approach 1 - no redundancy in the inventory file. We assume the first group we find
 # that isn't in the parent group `servers` is our role.
@@ -19,6 +25,13 @@
 #    group_role: web
 #  when: 'web' in group_names
 
+######################################################
+
+
+######################################################
+########
+##  Second -- We actually change the hostname using the hostname module
+##  https://docs.ansible.com/ansible/latest/modules/hostname_module.html
 
 
 # Set the hostname
