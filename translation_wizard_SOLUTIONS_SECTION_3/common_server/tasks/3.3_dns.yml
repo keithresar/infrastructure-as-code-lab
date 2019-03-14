@@ -7,6 +7,7 @@
 
 #
 # Approach 2 - use the lineinfile module.
+# https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
 #
 
 - name: Point servers to Google DNS

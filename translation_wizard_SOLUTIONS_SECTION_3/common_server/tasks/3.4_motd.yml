@@ -9,6 +9,7 @@
 
 #
 # Approach 2 - Use the URI module to download and store the most recent banner
+# https://docs.ansible.com/ansible/latest/modules/uri_module.html
 #
 - name: Get MOTD warning banner
   uri:
