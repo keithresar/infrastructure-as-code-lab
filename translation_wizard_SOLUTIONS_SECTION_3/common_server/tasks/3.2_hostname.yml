@@ -19,12 +19,9 @@
 #    group_role: web
 #  when: 'web' in group_names
 
-#
-# Approach 3 - create a variable in your inventory with the name `group_role`
-#
 
 
-
+# Set the hostname
 - name: Set hostname on each server
   hostname:
     name: "{{ group_role }}-{{ student_user }}"

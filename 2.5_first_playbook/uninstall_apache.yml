@@ -2,7 +2,7 @@
 #
 # Learning goals from this file:
 #
-#   1. Modify your `install_apache.yml` on your own to remove the apache
+#   1. Modify your `uninstall_apache.yml` on your own to remove apache
 #      from your web server
 #
 
