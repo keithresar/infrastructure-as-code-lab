@@ -4,6 +4,8 @@
   yum:
     state: present
     name:
+      - httpd
+      - php
       - firewalld
       - python-firewall
   notify: start firewalld

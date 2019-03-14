@@ -16,12 +16,13 @@
 # Approach 2: Reference a package list in a variable that is set in defaults but that
 # can be overidden if the web server was running another interpreter like node.
 #
+#
+#- name: Install packages
+#  yum:
+#    state: present
+#    name:  "{{ web_packages }}"
+#  notify: restart httpd
 
-- name: Install packages
-  yum:
-    state: present
-    name:  "{{ web_packages }}"
-  notify: restart httpd
 
 
 # You'll need to install the firewalld and python-firewalld modules for this to work.
@@ -32,11 +33,4 @@
     state: enabled
     permanent: yes
     immediate: yes
-    
-    
-- name: Make sure Apache is running
-  service:
-    state: started
-    name: httpd
-    
 
