@@ -26,6 +26,7 @@ api
 ; group level example
 ;
 [servers:vars]
+; Change below to match your student user name
 ansible_ssh_user=student3
 
 
@@ -33,11 +34,12 @@ ansible_ssh_user=student3
 ; Enter IP address for your f5 server
 
 
-
-
 [all:vars]
+; Change below to match your student number and student user name
 student_number=3
 student_user=student3
+
+
 student_password=R3dh@t12
 aws_region=us-east-1
 
