@@ -1,0 +1,58 @@
+
+##############################################################3
+##### 3.2 - Set hostnamews
+##
+#
+
+# Find my group
+- set_fact:
+    mygroup: api
+  when: "'api' in group_names"
+- set_fact:
+    mygroup: web
+  when: "'web' in group_names"
+
+
+# Set hostname
+- name: Set hostname
+  hostname:
+    name: "{{ ansible_ssh_host }}-{{ student_number }}"
+
+
+
+
+##############################################################3
+##### 3.3 - Change Server DNS
+##
+#
+
+# Set DNS
+- name: Point servers to Google DNS
+  lineinfile:
+    path: /etc/resolv.conf
+    regexp: '^nameserver'
+    line: 'nameserver 8.8.8.8'
+
+
+
+
+##############################################################3
+##### 3.4 - Change Server DNS
+##
+#
+
+# Get login banner
+- name: Get MOTD warning banner
+  uri:
+    url:  "https://raw.githubusercontent.com/keithresar/infrastructure-as-code-control-lessons/master/warning_banner.html"
+    return_content: yes
+  register: motd
+
+# Set Login banner
+- name: Set MOTD warning banner
+  copy:
+    content: "{{ motd.content }}"
+    dest: /etc/motd
+
+
+
