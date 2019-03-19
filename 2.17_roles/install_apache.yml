@@ -9,8 +9,9 @@
 - hosts: web
   name: Install the Apache web service
   become: true
+  
 
-  # Task 2.18: Decomposing tasks into roles
-  # Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
-  # Also reference files under `apache_simple/*/main.yml`
+
+  roles:
+    - apache_basic
 

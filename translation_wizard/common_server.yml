@@ -16,7 +16,7 @@
 # Set hostname
 - name: Set hostname
   hostname:
-    name: "{{ ansible_ssh_host }}-{{ student_number }}"
+    name: "{{ mygroup }}-{{ student_number }}"
 
 
 

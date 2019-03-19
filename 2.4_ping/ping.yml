@@ -76,7 +76,8 @@
   #  - A valid Python interpretor exists on the target server
   #  - A sample piece of Python code can be executed on the target server
   tasks:
-    - name: Verify host connectivity
+    - name: Verify host connectivity   
       ping:
+      
   
 

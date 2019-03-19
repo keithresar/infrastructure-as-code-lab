@@ -1,18 +1,36 @@
 ---
-#
-# Learning goals from this file:
-#
-#   1. Write your first Ansible automation
-#   2. Become familiar with the standard Ansible module documentation
-#
-
-
-# Task 2.5 - Defining your Play
-# Notice how the hosts keyword is now being used to limit the "blast radius" of
-# our automation.
 - hosts: web
   name: Install the Apache web service
-
-  # These tasks must be executed as root, so this line uses sudo from our student account
-  become: true
-
+  become: yes
+  
+  vars:
+    httpd_test_message: Hello, this is my test message
+    httpd_port: 80
+    httpd_packages:
+      - httpd
+      - mod_wsgi
+  
+  tasks:
+    - name: Install httpd package (httpd == Apache)
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: httpd_packages
+        
+    - name: set httpd port
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "^Listen "
+        line: "Listen {{ httpd_port }}"
+    
+    - name: Create web page
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+    
+    - name: Start Apache
+      service:
+        name: httpd
+        state: started
+    
+        

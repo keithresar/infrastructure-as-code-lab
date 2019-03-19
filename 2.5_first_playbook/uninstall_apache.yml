@@ -1,9 +1,16 @@
----
-#
-# Learning goals from this file:
-#
-#   1. Modify your `uninstall_apache.yml` on your own to remove apache
-#      from your web server
-#
 
-
+- hosts: web
+  name: Uninstall the Apache web service
+  become: yes
+  
+  tasks:
+    - name: Stop Apache
+      service:
+        name: httpd
+        state: stopped
+        
+    - name: uninstall httpd package (httpd == Apache)
+      yum:
+        name: httpd
+        state: absent
+        

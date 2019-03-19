@@ -7,3 +7,26 @@
 #
 
 
+# Task 2.5 - Defining your Play
+# Notice how the hosts keyword is now being used to limit the "blast radius" of
+# our automation.
+- hosts: web
+  name: Install the Apache web service
+
+  # These tasks must be executed as root, so this line uses sudo from our student account
+  become: true
+
+- hosts: web
+  name: Install the Apache web service
+  become: yes
+  
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start httpd
+      service:
+        name: httpd
+        state: started

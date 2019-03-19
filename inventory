@@ -5,12 +5,12 @@
 ;
 [web]
 ; Enter IP address for your web server
-10.10.10.25
+10.10.10.58
 
 
 [api]
 ; Enter IP address for your api server
-10.10.11.114
+10.10.11.95
 
 ;
 ; Groups can be nested like this
@@ -27,7 +27,7 @@ api
 ;
 [servers:vars]
 ; Change below to match your student user name
-ansible_ssh_user=student3
+ansible_ssh_user=student0
 
 
 [loadbalancer]
@@ -36,8 +36,8 @@ ansible_ssh_user=student3
 
 [all:vars]
 ; Change below to match your student number and student user name
-student_number=3
-student_user=student3
+student_number=0
+student_user=student0
 
 
 student_password=R3dh@t12
