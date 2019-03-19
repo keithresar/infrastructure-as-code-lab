@@ -1,6 +1,7 @@
 
 - hosts: all
   become: yes
+  tags: common_server
 
   tasks:
     - include_tasks: common_server.yml
@@ -9,6 +10,7 @@
 
 - hosts: web
   become: yes
+  tags: web
 
   tasks:
     - include_tasks: web.yml
@@ -17,6 +19,7 @@
 
 - hosts: api
   become: yes
+  tags: api
 
   tasks:
     - include_tasks: api.yml
