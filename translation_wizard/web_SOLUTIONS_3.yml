@@ -1,0 +1,97 @@
+
+##############################################################3
+##### 3.6 - Install web packages
+##
+#
+
+# Use the yum module to install the two packages onto your web server
+# Help: https://docs.ansible.com/ansible/latest/modules/yum_module.html
+- name: Install packages
+  yum:
+    state: present
+    name:
+      - httpd
+      - php
+      - git
+
+
+# Use the lineinfile module to update the httpd port
+# Help: https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+- name: Configure Apache Port
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "^Listen "
+    line: "Listen 80"
+
+
+# Use the service module to make the Apache web server is running
+# Help: https://docs.ansible.com/ansible/latest/modules/service_module.html
+- name: restart httpd
+  service:
+    name: httpd
+    state: restarted
+
+
+
+##############################################################3
+##### 3.7 - Deploy web site content
+##
+#
+
+# Make sure the /var/www/html target directory is empty and we don't
+# have files lingering here from earlier exercises by making sure 
+# index.html is absent
+# Help: https://docs.ansible.com/ansible/latest/modules/file_module.html
+- name: Cleaning up /var/www/html
+  file:
+    path: /var/www/html/index.html
+    state: absent
+
+
+# Perform a git clone of the web content from the referenced repo
+# Help: https://docs.ansible.com/ansible/latest/modules/git_module.html
+-  name: Promote web content
+   git:
+     repo: https://github.com/keithresar/infrastructure-as-code-web
+     dest: /var/www/html
+     update: no
+     force: yes
+
+
+
+##############################################################3
+##### 3.12 - Connecting web to API server
+##
+#
+
+
+# Find your API servers IP address - you're going to need it later
+# The 'groups' variable contains a list of all groups.  We know the API server is in the
+# 'api' group and it is the first element in the group, therefore we can reference
+# that specific server using this notation.
+# Help: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#magic
+- debug:
+    var: groups['api'][0]
+
+
+# Use the lineinfile module to modify the /var/www/html/configure.php file to replace
+# the literal string 'IP' with your API server's IP address
+# Help: https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+- name: Connect web server to API endpoint
+  lineinfile:
+    path: /var/www/html/configure.php
+    regexp: API_SERVER_IP
+    line: "define('API_SERVER_IP','{{ groups['api'][0] }}');"
+
+
+# Use the lineinfile module to modify the /var/www/html/configure.php file to replace
+# the literal string '8080' with your API server's IP address
+# Help: https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+- name: Connect web server to API endpoint
+  lineinfile:
+   path: /var/www/html/configure.php
+   regexp: API_SERVER_PORT
+   line: "define('API_SERVER_PORT',8080);"
+
+
+
