@@ -1,0 +1,53 @@
+
+- hosts: localhost
+  gather_facts: False
+  become: False
+
+  tasks:
+
+    ##############################################################3
+    ##### 4.4 - Retrieving AWS API keys from the Vault
+    ##
+    #
+
+
+    # Use the hashi_vault lookup plugin to read our aws keys
+    # Help: https://docs.ansible.com/ansible/latest/plugins/lookup/hashi_vault.html
+    - set_fact:
+        aws_keys: "{{ lookup('hashi_vault', 'secret=secret/data/aws_keys token='+student_password+' url=http://10.10.12.36:8200') }}"
+
+    - debug:
+        var: aws_keys
+
+
+
+    ##############################################################3
+    ##### 4.6 - Calling an External Inventory Script
+    ##
+    #
+
+    # We call an external script with and pass along our credentials in an environment
+    # variable.  We capture the output in a variable called ec2_raw
+    # Help: https://docs.ansible.com/ansible/latest/modules/command_module.html
+    - name: Extract data from the ec2.py script
+      command:
+        cmd: ../ec2.py
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ aws_keys.data.aws_access_key }}"
+        AWS_SECRET_ACCESS_KEY: "{{ aws_keys.data.aws_secret_key }}"
+      delegate_to: localhost
+      become: False
+      register: ec2_raw
+
+    # Reformat the data and extract as a json object that we can manipulate
+    # Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html
+    - set_fact:
+        ec2: "{{ ec2_raw.stdout | from_json }}"
+
+    # Print out some metadata that AWS maintains about your instance by placing the 
+    # PUBLIC ip address for one of your hosts below
+    - debug:
+        msg: "{{ ec2._meta.hostvars['18.234.59.10'] }}"
+
+
+

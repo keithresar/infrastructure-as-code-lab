@@ -1,0 +1,85 @@
+
+##############################################################3
+##### 3.10 - Checkout API source code
+##
+#
+
+# Use the git module to checkout this repo on the local host (NOT the API server)
+# Help: https://docs.ansible.com/ansible/latest/modules/git_module.html
+# Help: https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html#delegation
+- name: Checkout build repo locally
+  git:
+    repo: https://github.com/keithresar/infrastructure-as-code-language-api
+    dest: /tmp/infrastructure-as-code-language-api
+  delegate_to: localhost
+
+
+# Use the docker_image module to build a container image from the path where you
+# cloned the repo to above.  Delegate this to localhost.  The repository should be
+# accessible at: 10.10.12.36:5000
+# Help: https://docs.ansible.com/ansible/latest/modules/docker_image_module.html
+- name: Build container image
+  docker_image:
+    name: "api-{{ student_user }}:latest"
+    repository: "10.10.12.36:5000/api-{{ student_user }}:latest"
+    push: yes
+    path: /tmp/infrastructure-as-code-language-api/
+    force: yes
+  delegate_to: localhost
+
+
+
+##############################################################3
+##### 3.11 - Deploying container onto API server
+##
+#
+
+
+### Begin docker setup -- ignore #####
+# The following lines install and configure docker on your api server,
+# You can leave them as is
+- name: Install docker packages
+  yum:
+    name:
+      - docker
+      - python-docker
+    state: present
+  register: yum
+
+- name: Enable insecure registries
+  lineinfile:
+    path: /etc/sysconfig/docker
+    regex: ^INSECURE_REGISTRY
+    line: "INSECURE_REGISTRY='--insecure-registry 10.10.12.36:5000'"
+  register: docker
+
+- name: Docker daemon running
+  service:
+    name: docker
+    state: restarted
+  when: docker.changed or yum.changed
+### End docker setup -- ignore #####
+
+
+# Use the lookup plugin to read the API key for the LanguageLayer service and
+# output using the debug module
+- debug:
+    msg: "{{ lookup('file','/tmp/languagelayer_api_key') }}"
+
+
+# Use the docker_container module to deploy the image to the API server that 
+# you just built in 3.10.  The image is available from the "repository" from 3.10
+# Help: https://docs.ansible.com/ansible/latest/modules/docker_container_module.html
+- name: Deploy container image
+  docker_container:
+    name: api1
+    image: "10.10.12.36:5000/api-{{ student_user }}"
+    ports:
+      - 8080:8080
+    env:
+      LANGUAGELAYER_API_KEY: "{{ lookup('file','/tmp/languagelayer_api_key') }}"
+
+
+
+
+
