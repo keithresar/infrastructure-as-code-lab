@@ -8,6 +8,20 @@
 
 
 
+### Ignore until 5.7 ###
+#- hosts: f5
+#  become: yes
+#  tags: f5
+#  
+#  vars:
+#    api_container_count: 1
+#
+#  tasks:
+#    - include_tasks: f5.yml
+### End Ignore ###
+
+
+
 - hosts: web
   become: yes
   tags: web
@@ -20,6 +34,11 @@
 - hosts: api
   become: yes
   tags: api
+
+  ### Ignore until 5.12 ####
+  vars:
+    api_container_count: 1
+  ### End ignore ###
 
   tasks:
     - include_tasks: api.yml
